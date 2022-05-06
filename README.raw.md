@@ -44,8 +44,6 @@ The total sum: 45228
 
 ## Assumptions
 
-Consider function `isPandigitalCombo(a, b, c)` that returns true if a combination of `a`, `b`, and `c` create a pandigital.
-
 Consider function `getNumDigits(n)` that returns the amount of digits in natural number `x`. 
 
 * e.g. `getNumDigits(10)` would be 2, as there are 2 digits in 10 (1 and 0).
