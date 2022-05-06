@@ -174,9 +174,9 @@ for (a in ranges([1, 9], [10, 99])):
 ```
 
 The amount of iterations for this solution is:
-* $(9 * 9999) + (99 * 999)$
-* $= 188,892$
-* $\approx 10^{5.3}$
+* $((9-1) * (9999-1000)) + ((99-10) * (999-100))$
+* $= 152,003$
+* $\approx 10^5$
 
 # Additional Work
 

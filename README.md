@@ -183,9 +183,9 @@ for (a in ranges([1, 9], [10, 99])):
 ```
   
 The amount of iterations for this solution is:
-* <img src="https://latex.codecogs.com/gif.latex?(9%20*%209999)%20+%20(99%20*%20999)"/>
-* <img src="https://latex.codecogs.com/gif.latex?=%20188,892"/>
-* <img src="https://latex.codecogs.com/gif.latex?&#x5C;approx%2010^{5.3}"/>
+* <img src="https://latex.codecogs.com/gif.latex?((9-1)%20*%20(9999-1000))%20+%20((99-10)%20*%20(999-100))"/>
+* <img src="https://latex.codecogs.com/gif.latex?=%20152,003"/>
+* <img src="https://latex.codecogs.com/gif.latex?&#x5C;approx%2010^5"/>
   
 #  Additional Work
   
