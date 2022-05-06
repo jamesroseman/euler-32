@@ -59,7 +59,7 @@ Consider `a` and `b` such that `a * b === c`.
   
 Consider`abDigits` such that `abDigits === getNumDigits(a) + getNumDigits(b)`.
   
-Provided with the desired number of digits X in a multiplier/multiplicand/product combination, the multiplier/multiplicand will always have a total of X/2 digits if X is even, and (X + 1)/2 digits if X is odd. The work for this is at the bottom of this document, under the heading **Additional Work**. It's sufficient for this solution to know that this is always the case. 
+Provided with the desired number of digits <img src="https://latex.codecogs.com/gif.latex?X"/> in a multiplier/multiplicand/product combination, the multiplier/multiplicand will always have a total of <img src="https://latex.codecogs.com/gif.latex?&#x5C;frac{X}{2}"/> digits if <img src="https://latex.codecogs.com/gif.latex?X"/> is even, and <img src="https://latex.codecogs.com/gif.latex?&#x5C;frac{X+1}{2}"/> digits if <img src="https://latex.codecogs.com/gif.latex?X"/> is odd. The work for this is at the bottom of this document, under the heading **Additional Work**. It's sufficient for this solution to know that this is always the case. 
   
 ##  Solving the Problem
   
@@ -171,8 +171,8 @@ for (a in range(1, 999999999)):
 ```
   
 The amount of iterations for this solution is:
-* 999999999 * 999999999
-* ≈ 10^18
+* <img src="https://latex.codecogs.com/gif.latex?999999999%20*%20999999999"/>
+* <img src="https://latex.codecogs.com/gif.latex?&#x5C;approx%2010^{18}"/>
   
 By leveraging the proof below and bounding `a` to be less than `b`, we can settle on the correct amount of digits for `a` and `b` upfront, and therefore reduce the necessary amount of iterations.
   
@@ -185,11 +185,9 @@ for (a in ranges([1, 9], [10, 99])):
 ```
   
 The amount of iterations for this solution is:
-* (9 * 9999) + (99 * 999)
-* 89,991 + 98,901
-* = 188,892
-* ≈ 10^5.3
-  
+* <img src="https://latex.codecogs.com/gif.latex?(9%20*%209999)%20+%20(99%20*%20999)"/>
+* <img src="https://latex.codecogs.com/gif.latex?=%20188,892"/>
+* <img src="https://latex.codecogs.com/gif.latex?&#x5C;approx%2010^{5.3}"/>
   
 #  Additional Work
   
