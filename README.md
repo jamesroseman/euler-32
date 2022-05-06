@@ -48,6 +48,7 @@ The total sum: 45228
   
 ##  Assumptions
   
+  
 Consider function `getNumDigits(n)` that returns the amount of digits in natural number `x`. 
   
 * e.g. `getNumDigits(10)` would be 2, as there are 2 digits in 10 (1 and 0).
@@ -254,4 +255,50 @@ Because a number of digits must be a whole number, and because <img src="https:/
   
 <p align="center"><img src="https://latex.codecogs.com/gif.latex?D(a)%20+%20D(b)%20=%20%20&#x5C;left&#x5C;{&#x5C;begin{array}{ll}%20%20%20%20%20%20&#x5C;frac{X}{2},%20&amp;%20X%20&#x5C;text{%20is%20even}%20&#x5C;&#x5C;%20&#x5C;&#x5C;%20%20%20%20%20%20&#x5C;frac{X+1}{2},%20&amp;%20X%20&#x5C;text{%20is%20odd}%20&#x5C;&#x5C;&#x5C;end{array}&#x5C;right."/></p>  
   
+  
+##  Number of Digit Possibilities in Multiplicand/Multiplier
+  
+  
+The amount of ways <img src="https://latex.codecogs.com/gif.latex?k"/> numbers can sum to <img src="https://latex.codecogs.com/gif.latex?n"/> is represented:
+  
+<p align="center"><img src="https://latex.codecogs.com/gif.latex?n%20+%20k%20-%201%20&#x5C;choose%20k%20-%201"/></p>  
+  
+  
+This can be rewritten as a factorial:
+  
+<p align="center"><img src="https://latex.codecogs.com/gif.latex?&#x5C;frac{(n+k-1)!}{n!(k-1)!}"/></p>  
+  
+  
+The amount of ways <img src="https://latex.codecogs.com/gif.latex?2"/> numbers can sum to <img src="https://latex.codecogs.com/gif.latex?x"/> is represented:
+  
+<p align="center"><img src="https://latex.codecogs.com/gif.latex?&#x5C;frac{(n+2-1)!}{n!(2-1)!}"/></p>  
+  
+  
+Which simplifies to: 
+  
+<p align="center"><img src="https://latex.codecogs.com/gif.latex?&#x5C;frac{(n+1)!}{n!}"/></p>  
+  
+  
+The amount of ways <img src="https://latex.codecogs.com/gif.latex?2"/> non-zero numbers can sum to <img src="https://latex.codecogs.com/gif.latex?x"/> is represented:
+  
+<p align="center"><img src="https://latex.codecogs.com/gif.latex?&#x5C;frac{(n+1)!}{n!}%20-%202"/></p>  
+  
+  
+The amount of ways <img src="https://latex.codecogs.com/gif.latex?2"/> non-zero numbers <img src="https://latex.codecogs.com/gif.latex?y"/>, <img src="https://latex.codecogs.com/gif.latex?z"/> can sum to <img src="https://latex.codecogs.com/gif.latex?x"/> such that <img src="https://latex.codecogs.com/gif.latex?y%20&#x5C;leq%20z"/> is exactly half of the total, or:
+  
+<p align="center"><img src="https://latex.codecogs.com/gif.latex?&#x5C;frac{&#x5C;frac{(n+1)!}{n!}%20-%202}{2}"/></p>  
+  
+  
+This reduces to:
+  
+<p align="center"><img src="https://latex.codecogs.com/gif.latex?&#x5C;frac{(n+1)!}{2*n!}-1"/></p>  
+  
+  
+Suppose the amount of digits in <img src="https://latex.codecogs.com/gif.latex?a"/> and <img src="https://latex.codecogs.com/gif.latex?b"/> combined are <img src="https://latex.codecogs.com/gif.latex?5"/>, the total digit possibilities for <img src="https://latex.codecogs.com/gif.latex?a"/> and <img src="https://latex.codecogs.com/gif.latex?b"/> are:
+  
+* <img src="https://latex.codecogs.com/gif.latex?&#x5C;frac{(5+1)!}{2*5!}-1"/>
+* <img src="https://latex.codecogs.com/gif.latex?&#x5C;frac{6!}{2*5!}-1"/>
+* <img src="https://latex.codecogs.com/gif.latex?&#x5C;frac{6!}{2*5!}-1"/>
+* <img src="https://latex.codecogs.com/gif.latex?3%20-%201"/>
+* <img src="https://latex.codecogs.com/gif.latex?=%202"/>
   

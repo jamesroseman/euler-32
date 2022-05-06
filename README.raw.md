@@ -245,3 +245,41 @@ $$ D(a) + D(b) =  \left\{
       \frac{X+1}{2}, & X \text{ is odd} \\
 \end{array}
 \right. $$
+
+## Number of Digit Possibilities in Multiplicand/Multiplier
+
+The amount of ways $k$ numbers can sum to $n$ is represented:
+
+$$n + k - 1 \choose k - 1$$
+
+This can be rewritten as a factorial:
+
+$$\frac{(n+k-1)!}{n!(k-1)!}$$
+
+The amount of ways $2$ numbers can sum to $x$ is represented:
+
+$$\frac{(n+2-1)!}{n!(2-1)!}$$
+
+Which simplifies to: 
+
+$$\frac{(n+1)!}{n!}$$
+
+The amount of ways $2$ non-zero numbers can sum to $x$ is represented:
+
+$$\frac{(n+1)!}{n!} - 2$$
+
+The amount of ways $2$ non-zero numbers $y$, $z$ can sum to $x$ such that $y \leq z$ is exactly half of the total, or:
+
+$$\frac{\frac{(n+1)!}{n!} - 2}{2}$$
+
+This reduces to:
+
+$$\frac{(n+1)!}{2*n!}-1$$
+
+Suppose the amount of digits in $a$ and $b$ combined are $5$, the total digit possibilities for $a$ and $b$ are:
+
+* $\frac{(5+1)!}{2*5!}-1$
+* $\frac{6!}{2*5!}-1$
+* $\frac{6!}{2*5!}-1$
+* $3 - 1$
+* $= 2$
