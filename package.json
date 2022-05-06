@@ -1,0 +1,23 @@
+{
+  "name": "euler-32",
+  "description": "Install dependencies.",
+  "version": "0.0.1",
+  "main": "solution.js",
+  "scripts": {
+    "start": "node run-solution.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamesroseman/euler-32.git"
+  },
+  "author": "James Roseman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jamesroseman/euler-32/issues"
+  },
+  "homepage": "https://github.com/jamesroseman/euler-32#readme",
+  "devDependencies": {
+    "jest": "^28.0.3"
+  }
+}
