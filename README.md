@@ -54,7 +54,7 @@ Consider `a` and `b` such that `a * b === c`.
 
 Consider`abDigits` such that `abDigits === getNumDigits(a) + getNumDigits(b)`.
 
-Provided with the desired number of digits $X$ in a multiplier/multiplicand/product combination, the multiplier/multiplicand will always have a total of $\frac{X}{2}$ digits if $X$ is even, and $\frac{X+1}{2}$ digits if $X$ is odd. The work for this is at the bottom of this document, under the heading **Additional Work**. It's sufficient for this solution to know that this is always the case. 
+Provided with the desired number of digits X in a multiplier/multiplicand/product combination, the multiplier/multiplicand will always have a total of X/2 digits if X is even, and (X + 1)/2 digits if X is odd. The work for this is at the bottom of this document, under the heading **Additional Work**. It's sufficient for this solution to know that this is always the case. 
 
 ## Solving the Problem
 
@@ -162,8 +162,8 @@ for (a in range(1, 999999999)):
 ```
 
 The amount of iterations for this solution is:
-* $999999999 * 999999999$ 
-* $\approx 10^{18}$
+* 999999999 * 999999999
+* ≈ 10^18
 
 By leveraging the proof below and bounding `a` to be less than `b`, we can settle on the correct amount of digits for `a` and `b` upfront, and therefore reduce the necessary amount of iterations.
 
@@ -176,76 +176,76 @@ for (a in ranges([1, 9], [10, 99])):
 ```
 
 The amount of iterations for this solution is:
-* $(9 * 9999) + (99 * 999)$
-* $89,991 + 98,901$
-* $= 188,892$
-* $\approx 10^{5.3}$
+* (9 * 9999) + (99 * 999)
+* 89,991 + 98,901
+* = 188,892
+* ≈ 10^5.3
 
 
 # Additional Work
 
 ## Number of Digits in a Multiplicand/Multiplier Given X
 
-*Note: Consider $\lfloor x \rfloor$ as notation for "floor of $x$". e.g. $\lfloor 4.83 \rfloor = 4$*
+*Note: Consider <img src="https://render.githubusercontent.com/render/math?math=\bbox[%230d1117]{\color{white}{%5Clfloor%20x%20%5Crfloor}}" /> as notation for "floor of <img src="https://render.githubusercontent.com/render/math?math=\bbox[%230d1117]{\color{white}{x}}" />". e.g. <img src="https://render.githubusercontent.com/render/math?math=\bbox[%230d1117]{\color{white}{%5Clfloor%204.83%20%5Crfloor%20%3D%204}}" />*
 
-The number of digits $D$ in a natural number $c$ can always be expressed as: 
+The number of digits <img src="https://render.githubusercontent.com/render/math?math=\bbox[%230d1117]{\color{white}{D}}" /> in a natural number <img src="https://render.githubusercontent.com/render/math?math=\bbox[%230d1117]{\color{white}{c}}" /> can always be expressed as: 
 
-$$D(c) = \lfloor log_{10}c \rfloor + 1$$
+<h3 align="center"><img src="https://render.githubusercontent.com/render/math?math=\bbox[%230d1117]{\color{white}{D%28c%29%20%3D%20%5Clfloor%20log_%7B10%7Dc%20%5Crfloor%20%2B%201%24%24For%20simplicity%2C%20we%20can%20remove%20the%20%22floor%22%20by%20introducing%20a%20bounded%20variable%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7B%255Ctheta_c%2520%255Cin%2520%255B0%252C1%2529%7D%7D%22%20%2F%3E%2C%20which%20represents%20the%20subtrahend%20required%20to%20%22floor%22%20the%20number%3AD%28c%29%20%3D%20log_%7B10%7Dc%20-%20%5Ctheta_c%20%2B%201%24%24}}" /></h3>
 
-For simplicity, we can remove the "floor" by introducing a bounded variable $\theta_c \in [0,1)$, which represents the subtrahend required to "floor" the number:
 
-$$D(c) = log_{10}c - \theta_c + 1$$
 
-Suppose $a * b = c$ such that $a \leq b$. The number of digits $D$ in $c$ can then be expressed:
+D(c) = log_{10}c - \theta_c + 1$$
 
-$$D(c) = \lfloor log_{10}ab \rfloor + 1$$
+Suppose <img src="https://render.githubusercontent.com/render/math?math=\bbox[%230d1117]{\color{white}{a%20%2a%20b%20%3D%20c}}" /> such that <img src="https://render.githubusercontent.com/render/math?math=\bbox[%230d1117]{\color{white}{a%20%5Cleq%20b}}" />. The number of digits <img src="https://render.githubusercontent.com/render/math?math=\bbox[%230d1117]{\color{white}{D}}" /> in <img src="https://render.githubusercontent.com/render/math?math=\bbox[%230d1117]{\color{white}{c}}" /> can then be expressed:
 
-Which reduces to:
+<h3 align="center"><img src="https://render.githubusercontent.com/render/math?math=\bbox[%230d1117]{\color{white}{D%28c%29%20%3D%20%5Clfloor%20log_%7B10%7Dab%20%5Crfloor%20%2B%201%24%24Which%20reduces%20to%3AD%28c%29%20%3D%20%5Clfloor%20log_%7B10%7Da%20%2B%20log_%7B10%7Db%20%5Crfloor%20%2B%201%24%24}}" /></h3>
 
-$$D(c) = \lfloor log_{10}a + log_{10}b \rfloor + 1$$
 
-Or, for simplicity, where $\theta_{ab} \in [0, 1)$:
 
-$$D(c) = log_{10}a + log_{10}b - \theta_{ab} + 1$$
+D(c) = \lfloor log_{10}a + log_{10}b \rfloor + 1$$
 
-$\theta_{ab}$ represents the subtrahend required to "floor" $log_{10}a + log_{10}b$. It will be equivalent to $\theta_a + \theta_b$ for all cases except when $\theta_a + \theta_b \geq 1$, when the original "floor" would have removed the 1. 
+Or, for simplicity, where <img src="https://render.githubusercontent.com/render/math?math=\bbox[%230d1117]{\color{white}{%5Ctheta_%7Bab%7D%20%5Cin%20%5B0%2C%201%29}}" />:
 
-$$ D(c) =  \left\{
+<h3 align="center"><img src="https://render.githubusercontent.com/render/math?math=\bbox[%230d1117]{\color{white}{D%28c%29%20%3D%20log_%7B10%7Da%20%2B%20log_%7B10%7Db%20-%20%5Ctheta_%7Bab%7D%20%2B%201%24%24%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7B%255Ctheta_%257Bab%257D%7D%7D%22%20%2F%3E%20represents%20the%20subtrahend%20required%20to%20%22floor%22%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7Blog_%257B10%257Da%2520%252B%2520log_%257B10%257Db%7D%7D%22%20%2F%3E.%20It%20will%20be%20equivalent%20to%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7B%255Ctheta_a%2520%252B%2520%255Ctheta_b%7D%7D%22%20%2F%3E%20for%20all%20cases%20except%20when%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7B%255Ctheta_a%2520%252B%2520%255Ctheta_b%2520%255Cgeq%25201%7D%7D%22%20%2F%3E%2C%20when%20the%20original%20%22floor%22%20would%20have%20removed%20the%201.%20%20D%28c%29%20%3D%20%20%5Cleft%5C%7B}}" /></h3>
+
+
+
+ D(c) =  \left\{
 \begin{array}{ll}
       log_{10}a + log_{10}b - (\theta_a + \theta_b) + 1, & \theta_a + \theta_b < 1 \\
       log_{10}a + log_{10}b - (\theta_a + \theta_b - 1) + 1, & \theta_a + \theta_b \geq 1 \\
 \end{array}
-\right. $$
+<h3 align="center"><img src="https://render.githubusercontent.com/render/math?math=\bbox[%230d1117]{\color{white}{%5Cright.%20Suppose%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7BX%7D%7D%22%20%2F%3E%2C%20which%20is%20the%20number%20of%20desired%20digits%20in%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7Ba%7D%7D%22%20%2F%3E%2C%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7Bb%7D%7D%22%20%2F%3E%2C%20and%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7Bc%7D%7D%22%20%2F%3E%20combined.X%20%3D%20D%28a%29%20%2B%20D%28b%29%20%2B%20D%28c%29%24%24}}" /></h3>
 
-Suppose $X$, which is the number of desired digits in $a$, $b$, and $c$ combined.
 
-$$X = D(a) + D(b) + D(c)$$
 
-Using the above substitutions, where $\theta_a \in [0, 1)$, $\theta_b \in [0, 1)$, and  $\theta_{ab} \in [0, 1)$:
+X = D(a) + D(b) + D(c)$$
 
-$$X = (log_{10}a - \theta_a + 1) + (log_{10}b - \theta_b + 1) + (log_{10}a + log_{10}b - \theta_{ab} + 1)$$
+Using the above substitutions, where <img src="https://render.githubusercontent.com/render/math?math=\bbox[%230d1117]{\color{white}{%5Ctheta_a%20%5Cin%20%5B0%2C%201%29}}" />, <img src="https://render.githubusercontent.com/render/math?math=\bbox[%230d1117]{\color{white}{%5Ctheta_b%20%5Cin%20%5B0%2C%201%29}}" />, and  <img src="https://render.githubusercontent.com/render/math?math=\bbox[%230d1117]{\color{white}{%5Ctheta_%7Bab%7D%20%5Cin%20%5B0%2C%201%29}}" />:
 
-Assuming $\theta_a + \theta_b < 1$, this reduces to:
+<h3 align="center"><img src="https://render.githubusercontent.com/render/math?math=\bbox[%230d1117]{\color{white}{X%20%3D%20%28log_%7B10%7Da%20-%20%5Ctheta_a%20%2B%201%29%20%2B%20%28log_%7B10%7Db%20-%20%5Ctheta_b%20%2B%201%29%20%2B%20%28log_%7B10%7Da%20%2B%20log_%7B10%7Db%20-%20%5Ctheta_%7Bab%7D%20%2B%201%29%24%24Assuming%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7B%255Ctheta_a%2520%252B%2520%255Ctheta_b%2520%253C%25201%7D%7D%22%20%2F%3E%2C%20this%20reduces%20to%3A%2a%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7BX%2520%253D%2520%2528log_%257B10%257Da%2520-%2520%255Ctheta_a%2520%252B%25201%2529%2520%252B%2520%2528log_%257B10%257Db%2520-%2520%255Ctheta_b%2520%252B%25201%2529%2520%252B%2520%2528log_%257B10%257Da%2520%252B%2520log_%257B10%257Db%2520-%2520%255Ctheta_a%2520-%2520%255Ctheta_b%2520%252B%25201%2529%7D%7D%22%20%2F%3E%2a%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7BX%2520%253D%25202log_%257B10%257Da%2520-%25202%255Ctheta_a%2520%252B%25202%2520%252B%25202log_%257B10%257Db%2520-%25202%255Ctheta_b%2520%252B%25201%7D%7D%22%20%2F%3E%2a%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7BX%2520%252B%25201%2520%253D%25202log_%257B10%257Da%2520-%25202%255Ctheta_a%2520%252B%25202%2520%252B%25202log_%257B10%257Db%2520-%25202%255Ctheta_b%2520%252B%25202%7D%7D%22%20%2F%3E%2a%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7BX%2520%252B%25201%2520%253D%25202%2528log_%257B10%257Da%2520-%2520%255Ctheta_a%2520%252B%25201%2529%2520%252B%25202%2528log_%257B10%257Db%2520-%2520%255Ctheta_b%2520%252B%25201%2529%7D%7D%22%20%2F%3E%2a%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7B%255Cfrac%257BX%2520%252B%25201%257D%257B2%257D%2520%253D%2520%2528log_%257B10%257Da%2520-%2520%255Ctheta_a%2520%252B%25201%2529%2520%252B%2520%2528log_%257B10%257Db%2520-%2520%255Ctheta_b%2520%252B%25201%2529%7D%7D%22%20%2F%3E%2a%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7B%255Cfrac%257BX%2520%252B%25201%257D%257B2%257D%2520%253D%2520D%2528a%2529%2520%252B%2520D%2528b%2529%7D%7D%22%20%2F%3EAssuming%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7B%255Ctheta_a%2520%252B%2520%255Ctheta_b%2520%255Cgeq%25201%7D%7D%22%20%2F%3E%2C%20this%20reduces%20to%3A%2a%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7BX%2520%253D%2520%2528log_%257B10%257Da%2520-%2520%255Ctheta_a%2520%252B%25201%2529%2520%252B%2520%2528log_%257B10%257Db%2520-%2520%255Ctheta_b%2520%252B%25201%2529%2520%252B%2520%2528log_%257B10%257Da%2520%252B%2520log_%257B10%257Db%2520-%2520%255Ctheta_a%2520-%2520%255Ctheta_b%2520%252B%25202%2529%7D%7D%22%20%2F%3E%2a%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7BX%2520%253D%25202log_%257B10%257Da%2520-%25202%255Ctheta_a%2520%252B%25202%2520%252B%25202log_%257B10%257Db%2520-%25202%255Ctheta_b%2520%252B%25202%7D%7D%22%20%2F%3E%2a%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7BX%2520%253D%25202%2528log_%257B10%257Da%2520-%2520%255Ctheta_a%2520%252B%25201%2529%2520%252B%25202%2528log_%257B10%257Db%2520-%2520%255Ctheta_b%2520%252B%25201%2529%7D%7D%22%20%2F%3E%2a%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7B%255Cfrac%257BX%257D%257B2%257D%2520%253D%2520%2528log_%257B10%257Da%2520-%2520%255Ctheta_a%2520%252B%25201%2529%2520%252B%2520%2528log_%257B10%257Db%2520-%2520%255Ctheta_b%2520%252B%25201%2529%7D%7D%22%20%2F%3E%2a%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7B%255Cfrac%257BX%257D%257B2%257D%2520%253D%2520D%2528a%2529%2520%252B%2520D%2528b%2529%7D%7D%22%20%2F%3EBecause%20a%20number%20of%20digits%20must%20be%20a%20whole%20number%2C%20and%20because%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7B%255Cfrac%257BX%257D%257B2%257D%7D%7D%22%20%2F%3E%20is%20only%20a%20whole%20number%20when%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7BX%7D%7D%22%20%2F%3E%20is%20even%2C%20and%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7B%255Cfrac%257BX%252B1%257D%257B2%257D%7D%7D%22%20%2F%3E%20is%20only%20a%20whole%20number%20when%20%3Cimg%20src%3D%22https%3A%2F%2Frender.githubusercontent.com%2Frender%2Fmath%3Fmath%3D%5Cbbox%5B%25230d1117%5D%7B%5Ccolor%7Bwhite%7D%7BX%7D%7D%22%20%2F%3E%20is%20odd%2C%20we%20can%20conclude%20that%3A%20D%28a%29%20%2B%20D%28b%29%20%3D%20%20%5Cleft%5C%7B}}" /></h3>
 
-* $X = (log_{10}a - \theta_a + 1) + (log_{10}b - \theta_b + 1) + (log_{10}a + log_{10}b - \theta_a - \theta_b + 1)$
-* $X = 2log_{10}a - 2\theta_a + 2 + 2log_{10}b - 2\theta_b + 1$
-* $X + 1 = 2log_{10}a - 2\theta_a + 2 + 2log_{10}b - 2\theta_b + 2$
-* $X + 1 = 2(log_{10}a - \theta_a + 1) + 2(log_{10}b - \theta_b + 1)$
-* $\frac{X + 1}{2} = (log_{10}a - \theta_a + 1) + (log_{10}b - \theta_b + 1)$
-* $\frac{X + 1}{2} = D(a) + D(b)$
 
-Assuming $\theta_a + \theta_b \geq 1$, this reduces to:
-* $X = (log_{10}a - \theta_a + 1) + (log_{10}b - \theta_b + 1) + (log_{10}a + log_{10}b - \theta_a - \theta_b + 2)$
-* $X = 2log_{10}a - 2\theta_a + 2 + 2log_{10}b - 2\theta_b + 2$
-* $X = 2(log_{10}a - \theta_a + 1) + 2(log_{10}b - \theta_b + 1)$
-* $\frac{X}{2} = (log_{10}a - \theta_a + 1) + (log_{10}b - \theta_b + 1)$
-* $\frac{X}{2} = D(a) + D(b)$
 
-Because a number of digits must be a whole number, and because $\frac{X}{2}$ is only a whole number when $X$ is even, and $\frac{X+1}{2}$ is only a whole number when $X$ is odd, we can conclude that:
 
-$$ D(a) + D(b) =  \left\{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ D(a) + D(b) =  \left\{
 \begin{array}{ll}
       \frac{X}{2}, & X \text{ is even} \\ \\
       \frac{X+1}{2}, & X \text{ is odd} \\
 \end{array}
-\right. $$
+\right. 
