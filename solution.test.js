@@ -1,6 +1,7 @@
 const {
   getDigits,
   getNumDigits,
+  hasRepeatedDigits,
   isPandigital,
   isPandigitalCombo,
   getNumABDigits,
@@ -26,6 +27,24 @@ describe('solution', () => {
     test('should get correct number of digits', () => {
       expect(getNumDigits(1)).toBe(1);
       expect(getNumDigits(48923048023)).toBe(11);
+    });
+  });
+
+  describe('hasRepeatedDigits', () => {
+    test('should return true if number has repeated digits', () => {
+      expect(hasRepeatedDigits(1234561789).hasRepeatedDigits).toBe(true);
+    });
+    test('should not return existence map if number has repeated digits', () => {
+      expect(hasRepeatedDigits(1234561789).digitExistenceMap).toBe(undefined);
+    });
+    test('should return false if number does not have repeated digits', () => {
+      expect(hasRepeatedDigits(123456789).hasRepeatedDigits).toBe(false);
+    });
+    test('should return correct existence map if number does not have repeated digits', () => {
+      expect(hasRepeatedDigits(15243).digitExistenceMap).toEqual([0, 1, 1, 1, 1, 1, 0, 0, 0, 0]);
+    })
+    test('should return false if number only has 1 digit', () => {
+      expect(hasRepeatedDigits(1).hasRepeatedDigits).toBe(false);
     });
   });
 

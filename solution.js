@@ -20,35 +20,49 @@ function getDigits(n) {
  * @param {*} n The number whose number of digits are being returned.
  * @returns The number of digits in n.
  */
- function getNumDigits(n) {
-  return `${n}`.length;
+function getNumDigits(n) {
+  return Math.floor(Math.log10(n)) + 1;
+}
+
+/**
+ * Tests whether or not a number has repeated digits. (121 => true)
+ * 
+ * @param {*} numberToTest The number being tested for repeated digits.
+ * @returns Object with "hasRepeatedDigits" true/false field, and (if false), digit existence list, whose
+ * index maps to the number of digits in the number.
+ */
+function hasRepeatedDigits(numberToTest, digitExistenceMap = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) {
+  var n = numberToTest;
+  var digits = [...digitExistenceMap];
+  while (n > 0) {
+    var currDigit = n % 10;
+    if (currDigit > digits.length || digits[currDigit] > 0) {
+      return { hasRepeatedDigits: true };
+    }
+    digits[currDigit] += 1;
+    n = Math.trunc(n / 10);
+  }
+  return { hasRepeatedDigits: false, digitExistenceMap: digits };
 }
 
 /**
  * Tests whether or not a number is pandigital.
  * 
- * @param {*} n The natural number being tested.
+ * @param {*} numberToCheck The natural number being tested.
  * @returns True if n is pandigital, false otherwise.
  */
-function isPandigital(n) {
-  var digits = getDigits(n);
-  var numDigits = getNumDigits(n);
-  // Iterate through the digits and create an existence map.
-  var digitsMap = Array.from(digits).reduce(
-    (map, digit) => ({
-      ...map,
-      [digit]: true,
-    }),
-    {}
-  );
-  // Iterate through the range from 1-numDigits and check
-  // for existence.
-  for (let i=1; i<=numDigits; i++) {
-    if (!digitsMap.hasOwnProperty(i)) {
+function isPandigital(numberToCheck) {
+  var n = numberToCheck;
+  var numDigits = getNumDigits(numberToCheck);
+  // Create an existence map where the index maps to the count of digits in the tested number.
+  var digits = Array(numDigits + 1).fill(0);
+  while (n > 0) {
+    var currDigit = n % 10;
+    if (currDigit === 0 || currDigit >= digits.length || digits[currDigit] > 0) {
       return false;
-    } else {
-      delete digitsMap[i];
     }
+    digits[currDigit] += 1;
+    n = Math.trunc(n / 10);
   }
   return true;
 }
@@ -96,11 +110,13 @@ function getNumABDigits(x) {
 function getPandigitalSumsFromABDigits(aDigits, bDigits, x, verbose) {
   var sumOfProducts = 0;
   var productsMap = {};
+  
   // Calculate the min/max ranges of a and b.
   var minAValue = Math.pow(10, aDigits - 1);
   var maxAValue = Math.pow(10, aDigits) - 1;
   var minBValue = Math.pow(10, bDigits - 1);
   var maxBValue = Math.pow(10, bDigits) - 1;
+
   // Iterate through the nested ranges, finding new pandigital combos.
   for (let a=minAValue; a<=maxAValue; a++) {
     for (let b=minBValue; b<=maxBValue; b++) {
@@ -146,6 +162,7 @@ function getPandigitalSums(x, verbose) {
 module.exports = {
   getDigits,
   getNumDigits,
+  hasRepeatedDigits,
   isPandigital,
   isPandigitalCombo,
   getNumABDigits,

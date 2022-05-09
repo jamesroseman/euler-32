@@ -44,7 +44,7 @@ The total sum: 45228
 
 ## Assumptions
 
-Consider function `getNumDigits(n)` that returns the amount of digits in natural number `x`. 
+Consider constant-time function `getNumDigits(n)` that returns the amount of digits in natural number `x`. 
 
 * e.g. `getNumDigits(10)` would be 2, as there are 2 digits in 10 (1 and 0).
 
@@ -131,6 +131,36 @@ function getPandigitalSums(x, verbose) {
 }
 ```
 
+The most important function for this solution is `getPandigitalSumsFromABDigits` which, provided the number of digits in `a`, the number of digits in `b`, and the desired number of digits in the multiplicand/multiplier/product combination `x`, returns the sum of unique x-digit pandigital products:
+
+```javascript
+function getPandigitalSumsFromABDigits(aDigits, bDigits, x, verbose) {
+  var sumOfProducts = 0;
+  var productsMap = {};
+  
+  // Calculate the min/max ranges of a and b.
+  var minAValue = Math.pow(10, aDigits - 1);
+  var maxAValue = Math.pow(10, aDigits) - 1;
+  var minBValue = Math.pow(10, bDigits - 1);
+  var maxBValue = Math.pow(10, bDigits) - 1;
+
+  // Iterate through the nested ranges, finding new pandigital combos.
+  for (let a=minAValue; a<=maxAValue; a++) {
+    for (let b=minBValue; b<=maxBValue; b++) {
+      var c = a * b;
+      if (isPandigitalCombo(a, b, c, x) && !productsMap.hasOwnProperty(c)) {
+        if (verbose) {
+          console.log(`${a} * ${b} = ${c}   (${x} total digits)`);
+        }
+        sumOfProducts += c;
+        productsMap[c] = true;
+      }
+    }
+  }
+  return sumOfProducts;
+}
+```
+
 Calling `getPandigitalSums(9, true)` returns the following:
 
 ```
@@ -155,28 +185,78 @@ A very simplistic brute force attempt to find a solution to this problem might l
 for (a in range(1, 999999999)):
   for (b in range(1, 999999999)):
     c = a * b;
-    if (isPandigital(c, 9)): 
+    if (isPandigital(a, b, c, 9)): 
       addToSum(c);
 ```
 
-The amount of iterations for this solution is:
+The amount of pandigital comparisons for this solution is:
 * $999999999 * 999999999$
 * $\approx 10^{18}$
 
-By leveraging the proof below and bounding `a` to be less than `b`, we can settle on the correct amount of digits for `a` and `b` upfront, and therefore reduce the necessary amount of iterations.
+By leveraging the proof below and bounding `a` to be less than `b`, we can settle on the correct amount of digits for `a` and `b` upfront, and therefore reduce the necessary amount of comparisons.
 
 ```
 for (a in ranges([1, 9], [10, 99])):
   for (b in ranges([1000, 9999], [100, 999])):
     c = a * b;
-    if (isPandigital(c, 9)): 
+    if (isPandigital(a, b, c, 9)): 
       addToSum(c);
 ```
 
-The amount of iterations for this solution is:
-* $((9-1) * (9999-1000)) + ((99-10) * (999-100))$
-* $= 152,003$
-* $\approx 10^5$
+The amount of pandigital comparisons reduces to:
+* $((9 - 1 + 1) * (9999 - 1000 + 1)) + ((99 - 10 + 1) * (999 - 100 + 1))$
+* $= 162,000$
+
+##### Excepting `a` and `b` values which contain repeating digits
+
+We can check if any number has repeated digits in the following way:
+
+```
+digits = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+for (digit in n):
+  if (digits[digit] > 0): return true;
+  digits[digit] += 1;
+```
+
+This takes at most 10 comparisons to check if a number has repeating digits. If `a` contains any repeated digits, or `b` contains any repeated digits (or digits found in `a`), we can skip the pandigital comparison. We can leverage this constant-time repeated digit function:
+
+```
+for (a in ranges([1, 9], [10, 99])):
+  if (!hasRepeatedDigits(a)):
+    for (b in ranges([1000, 9999], [100, 999])):
+      if (!hasRepeatedDigits(b)):
+        c = a * b;
+        if (isPandigital(a, b, c, 9)): 
+          addToSum(c);
+```
+
+It's worth noting that by checking the repeated digits, we have to do $\approx 150,000$ constant-time number comparisons. If we run the new code and track iterations, calls to our repeated digit function, and calls to the pandigital comparator:
+* $153,900 \text{ iterations}$
+* $153,999 \text{ repeated digit function calls}$
+* $48,384 \text{ pandigital comparisons}$
+* $202,382 \text{ function calls}$
+
+Now, removing our calls to the repeated digit function:
+* $162,000 \text{ iterations}$
+* $0 \text{ repeated digit function calls}$
+* $162,000 \text{ pandigital comparisons}$
+* $162,000 \text{ function calls}$
+
+Our `isPandigital` function leverages a `isPandigitalNumber` function, which performs the following logic:
+
+```
+numDigits = Math.floor(Math.log10(n)) + 1;
+if (numDigits > 9): return false;
+digits = Array(numDigits + 1).fill(0);
+for (digit in n):
+  if (digit === 0 || digit >= digits.length || digits[digit] > 0): return false;
+  digits[digit] += 1;
+return true;
+```
+
+This logic is incredibly similar to `hasRepeatedDigit` with one exception: in this function we create our digits existence map from the number of digits in the number we're checking. An existence map for 111 would be `[0, 0, 0]`. Any digit found in 111 that was $\geq$ 2 would result in a false result. Similarly, any repeating digit would also result in a false result. Because there can only be up to a 9-digit pandigital (because in base 10 there are only 9 valid digits, as the definition in the problem statement excludes 0), we can exit early on any number which is greater than 9 digits. Therefore, this function will loop a maximum of 9 times. We can think of it as a constant function, much like `hasRepeatedDigit`.
+
+So, though common logic might dictate that an optimized approach is to only loop through `b` values if there are no repeated digits in `a`, and to only make pandigital comparisons on `a` and `b` if there are no repeated digits in `b`, it is actually marginally more efficient to check them all to avoid repeating work.
 
 # Additional Work
 
